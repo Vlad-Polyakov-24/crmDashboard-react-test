@@ -1,0 +1,38 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 306px;
+  flex-shrink: 0;
+  padding: 37px 28px 76px;
+  background-color: white;
+  box-shadow: 0 10px 60px 0 rgba(226, 236, 249, .5);
+
+  &__logo {
+    display: block;
+    width: 100%;
+    max-width: 215px;
+
+    + .sidebar__nav {
+      margin-top: 55px;
+    }
+  }
+
+  &__logo-link {
+    display: block;
+    width: 100%;
+
+    picture {
+      display: block;
+
+      img {
+       display: block;
+       width: 100%;
+     }
+    }
+  }
+
+  &__nav {
+
+  }
+}
