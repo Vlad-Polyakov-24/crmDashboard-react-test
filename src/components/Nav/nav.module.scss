@@ -1,0 +1,38 @@
+@import '../../assets/styles/utils/vars';
+
+.nav {
+
+  &__list {
+    display: grid;
+    gap: 16px;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 8px 11px 11px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #9197b3;
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $blue;
+      }
+    }
+
+    &--active {
+      border-color: $blue;
+      background-color: $blue;
+      color: $white;
+    }
+
+    .text {
+      font-size: 14px;
+      font-weight: 500;
+      color: currentColor;
+    }
+  }
+}

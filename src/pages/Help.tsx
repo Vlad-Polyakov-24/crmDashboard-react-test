@@ -1,9 +1,11 @@
+import SomeContent from "../components/UI/SomeContent/SomeContent.tsx";
+import Card from "../components/UI/Card/Card.tsx";
 
 const Help = () => {
     return (
-        <div>
-            <p>Help</p>
-        </div>
+        <Card>
+            <SomeContent/>
+        </Card>
     );
 };
 
