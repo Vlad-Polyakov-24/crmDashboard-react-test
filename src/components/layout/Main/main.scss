@@ -1,4 +1,11 @@
+@import '../../../assets/styles/utils/breakpoints';
+
 .main {
   flex-grow: 1;
   padding: 41px 95px 258px 71px;
+  overflow-x: auto;
+
+  @include media('<', 'xl') {
+    padding: 40px 20px;
+  }
 }

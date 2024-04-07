@@ -1,0 +1,73 @@
+@import '../utils/breakpoints';
+@import '../utils/vars';
+
+.table {
+  width: 100%;
+
+  thead {
+    .table__tr {
+      border-bottom: 1px solid #eeeeee;
+    }
+  }
+
+  tbody {
+    .table__tr {
+      border-bottom: 1px solid #eee;
+    }
+  }
+
+  &__tr {
+    > * {
+      &:last-child {
+        width: 82px;
+      }
+
+      @include media('<=', 'xxl') {
+        &:first-child {
+          width: 170px;
+        }
+        &:nth-child(2) {
+          width: 130px;
+        }
+        &:nth-child(3) {
+          width: 160px;
+        }
+        &:nth-child(5) {
+          width: 140px;
+        }
+      }
+    }
+  }
+
+  &__th, &__td {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &__th {
+    padding-bottom: 12px;
+    text-align: left;
+    color: $gray;
+
+    &:last-child {
+      text-align: center;
+    }
+  }
+
+  &__td {
+    padding-top: 19px;
+    padding-bottom: 18px;
+    color: #292d32;
+
+    a {
+      display: block;
+
+      @media (hover: hover) {
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
+    }
+  }
+}
