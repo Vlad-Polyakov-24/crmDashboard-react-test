@@ -1,15 +1,7 @@
 import Status from "../../components/UI/Status/Status.tsx";
+import { ICustomer } from "./Customers.tsx";
 
-interface ICustomersTableRowProps {
-    name: string,
-    company: string,
-    phone: string,
-    email: string,
-    country: string,
-    status: boolean,
-}
-
-const CustomersTableRow = (props: ICustomersTableRowProps) => {
+const CustomersTableRow = (props: ICustomer) => {
     return (
         <tr className="table__tr">
             <td className="table__td">{props.name}</td>

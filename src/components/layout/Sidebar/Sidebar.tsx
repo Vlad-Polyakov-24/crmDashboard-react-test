@@ -1,20 +1,20 @@
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { RootState } from "../../../store";
 import './sidebar.scss';
 import logo from '../../../assets/images/logo.svg';
 import userLogo from '../../../assets/images/users/user-01.jpg';
 import Nav from "../../Nav/Nav.tsx";
-import {useEffect} from "react";
 
 const Sidebar = () => {
-    // @ts-ignore
-    const sidebarVisibility = useSelector(state => state.app.sidebarVisibility);
+    const sidebarVisibility = useSelector((state: RootState) => state.app.sidebarVisibility);
 
     useEffect(() => {
         document.body.style.overflow = window.innerWidth < 1024 && sidebarVisibility ? 'hidden' : 'auto';
-    }, [sidebarVisibility, window.innerWidth]);
+    }, [sidebarVisibility]);
 
     return (
-        <aside className={`sidebar ${sidebarVisibility && 'sidebar--active'}`}>
+        <aside className={`sidebar ${sidebarVisibility ? 'sidebar--active' : ''}`}>
             <strong className='sidebar__logo'>
                 <a href="#" className='sidebar__logo-link'>
                     <picture>
