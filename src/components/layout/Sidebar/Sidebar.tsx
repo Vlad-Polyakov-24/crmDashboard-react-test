@@ -16,7 +16,7 @@ const Sidebar = () => {
     return (
         <aside className={`sidebar ${sidebarVisibility ? 'sidebar--active' : ''}`}>
             <strong className='sidebar__logo'>
-                <a href="#" className='sidebar__logo-link'>
+                <a href="./" className='sidebar__logo-link'>
                     <picture>
                         <img src={logo} alt="logo"/>
                     </picture>

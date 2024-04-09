@@ -9,6 +9,14 @@ export interface IPaginationProps {
 
 const DOTS: string = '...';
 
+const range = (from: number, to: number): number[] => {
+    const arr = [];
+
+    for (let i = from; i < to+1; i++) arr.push(i);
+
+    return arr;
+};
+
 const Pagination = ({ totalPages, currentPage, setCurrentPage }: IPaginationProps) => {
     const [currentButtons, setCurrentButtons] = useState <(number | string)[]> ([]);
     const pageNumbers: number[] = [];
@@ -25,23 +33,31 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }: IPaginationProp
     useEffect(() => {
         let tempPageNumbers: (number | string)[] = [...pageNumbers];
 
-        if (currentPage >= 1 && currentPage <= siblingCount) {
-            tempPageNumbers = [1, 2, 3, 4, DOTS, pageNumbers.length];
+        if (totalPages >= 4 && currentPage <= totalPages) {
+            tempPageNumbers = range(1, pageNumbers.length);
         }
 
-        if (currentPage > siblingCount && currentPage < pageNumbers.length - 2) {
+        if (currentPage >= 1 && currentPage <= siblingCount && totalPages > 4) {
+            tempPageNumbers = [...range(1, 4), DOTS, pageNumbers.length];
+        }
+
+        if (currentPage > siblingCount && currentPage < pageNumbers.length - 2 && totalPages > 4) {
             const sliced1 = pageNumbers.slice(currentPage - 2, currentPage);
             const sliced2 = pageNumbers.slice(currentPage, currentPage + 1);
             tempPageNumbers = [1, DOTS, ...sliced1, ...sliced2, DOTS, pageNumbers.length];
         }
 
-        if (currentPage > pageNumbers.length - siblingCount) {
+        if (currentPage > pageNumbers.length - siblingCount && totalPages > 4) {
             const sliced = pageNumbers.slice(pageNumbers.length - 4);
             tempPageNumbers = [1, DOTS, ...sliced];
         }
 
         setCurrentButtons(tempPageNumbers);
-    }, [currentPage]);
+    }, [currentPage, totalPages]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [totalPages, setCurrentPage]);
 
     return (
         <ul className={styles.pagination}>

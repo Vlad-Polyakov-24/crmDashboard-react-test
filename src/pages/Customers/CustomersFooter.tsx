@@ -7,18 +7,18 @@ interface ICustomersFooterProps extends IPaginationProps {
     customersPerPage: number;
 }
 
-const CustomersFooter = (props: ICustomersFooterProps) => {
-    const showingDataFrom = props.currentPage * props.customersPerPage - (props.customersPerPage - 1);
-    const showingDataTo = props.currentPage * props.customersPerPage;
+const CustomersFooter = ({currentPage, customersPerPage, customersLength, ...rest}: ICustomersFooterProps) => {
+    const showingDataFrom = currentPage * customersPerPage - (customersPerPage - 1);
+    const showingDataTo = currentPage * customersPerPage;
 
     return (
         <footer className={styles.customers__footer}>
-            <p className={styles.info}>Showing data {showingDataFrom} to {showingDataTo} of {props.customersLength} entries</p>
-            <Pagination
-                totalPages={props.totalPages}
-                currentPage={props.currentPage}
-                setCurrentPage={props.setCurrentPage}
-            />
+            <p className={styles.info}>Showing data {showingDataFrom > customersLength ? customersLength : showingDataFrom} to {showingDataTo > customersLength ? customersLength : showingDataTo} of {customersLength} entries</p>
+            {customersLength > 0 && <Pagination
+                totalPages={rest.totalPages}
+                currentPage={currentPage}
+                setCurrentPage={rest.setCurrentPage}
+            />}
         </footer>
     );
 };

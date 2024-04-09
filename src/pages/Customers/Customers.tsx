@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { customersActions } from "../../store/customersSlice";
 import { RootState } from "../../store";
+import { ICustomer } from "../../store/customersSlice";
 import styles from './customers.module.scss';
 import Card from "../../components/UI/Card/Card";
 import CustomersHeader from "./CustomersHeader";
@@ -9,22 +10,15 @@ import CustomersFooter from "./CustomersFooter";
 import CustomersTable from "./CustomersTable";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
-export interface ICustomer {
-    id?: string,
-    name: string,
-    company: string,
-    phone: string,
-    email: string,
-    country: string,
-    status: boolean,
-}
-
 const Customers = () => {
     const dispatch = useDispatch();
     const customers = useSelector((state: RootState) => state.customers.customers);
     const isLoading = useSelector((state: RootState) => state.customers.isLoading);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [customersPerPage] = useState<number>(8);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredCustomers = customers.filter((customer) => customer.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     useEffect(() => {
         const checkData = (response: Response) => {
@@ -54,22 +48,23 @@ const Customers = () => {
 
     const lastCustomerIndex: number = currentPage * customersPerPage;
     const firstCustomerIndex: number = lastCustomerIndex - customersPerPage;
-    const currentCustomers: ICustomer[] = customers.slice(firstCustomerIndex, lastCustomerIndex);
-    const totalPages: number = Math.ceil(customers.length / customersPerPage);
+    const currentCustomers = filteredCustomers.slice(firstCustomerIndex, lastCustomerIndex);
+    const totalPages: number = Math.ceil(filteredCustomers.length / customersPerPage);
 
     return (
         <Card>
             <section className={styles.customers}>
-                <CustomersHeader/>
-                <article className={styles.customers__body}>
-                    {isLoading && (<>
-                        <p className={styles.customers__loading}>Loading...</p>
-                        <Spinner/>
-                    </>)}
-                    {!isLoading && <CustomersTable customers={currentCustomers}/>}
-                </article>
+                <CustomersHeader onSearch={setSearchQuery} searchQuery={searchQuery}/>
+                {isLoading && (<>
+                    <p className={styles.customers__loading}>Loading...</p>
+                    <Spinner/>
+                </>)}
+                {!isLoading && filteredCustomers.length > 0 && <article className={styles.customers__body}>
+                    <CustomersTable customers={currentCustomers}/>
+                </article>}
+                {!isLoading && filteredCustomers.length === 0 && <p className={styles.customers__loading}>No data!</p>}
                 {!isLoading && <CustomersFooter
-                    customersLength={customers.length}
+                    customersLength={filteredCustomers.length}
                     customersPerPage={customersPerPage}
                     totalPages={totalPages}
                     currentPage={currentPage}

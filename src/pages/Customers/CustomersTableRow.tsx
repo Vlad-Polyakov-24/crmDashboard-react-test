@@ -1,5 +1,5 @@
 import Status from "../../components/UI/Status/Status.tsx";
-import { ICustomer } from "./Customers.tsx";
+import { ICustomer } from "../../store/customersSlice.ts";
 
 const CustomersTableRow = (props: ICustomer) => {
     return (
